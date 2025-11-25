@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .click-btn {
+            padding: 20px 50px;
+            font-size: 24px;
+            background: #333;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+
+        .click-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            background: #000;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .birthday-content {
+            opacity: 0;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .birthday-content.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .birthday-text {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .happy {
+            font-size: 48px;
+            font-weight: 300;
+            letter-spacing: 8px;
+            color: #333;
+            opacity: 0;
+            transform: translateY(-50px);
+            text-align: center;
+        }
+
+        .happy.animate {
+            animation: fadeInDown 1s ease forwards;
+        }
+
+        .birthday {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 120px;
+            font-weight: bold;
+            color: #333;
+            opacity: 0;
+            transform: scale(0);
+            display: inline-block;
+            text-align: center;
+            font-style: italic;
+        }
+
+        .birthday.animate {
+            animation: zoomIn 1s ease 0.5s forwards;
+        }
+
+        .to-you {
+            font-size: 32px;
+            color: #333;
+            letter-spacing: 4px;
+            opacity: 0;
+            transform: translateY(50px);
+            border-top: 2px solid #333;
+            border-bottom: 2px solid #333;
+            padding: 10px 40px;
+            display: inline-block;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .to-you.animate {
+            animation: fadeInUp 1s ease 1s forwards;
+        }
+
+        .cake-container {
+            margin-top: 60px;
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .cake-container.animate {
+            animation: zoomIn 1s ease 1.5s forwards;
+        }
+
+        .cake {
+            width: 200px;
+            height: 150px;
+            background: linear-gradient(to bottom, #ff9a9e 0%, #fad0c4 50%, #fad0c4 100%);
+            border-radius: 20px 20px 0 0;
+            position: relative;
+            margin: 0 auto;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .cake::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 10px;
+            right: 10px;
+            height: 40px;
+            background: #fff;
+            border-radius: 10px;
+            opacity: 0.3;
+        }
+
+        .cake-layer {
+            width: 220px;
+            height: 40px;
+            background: linear-gradient(to bottom, #ffeaa7, #fdcb6e);
+            position: absolute;
+            bottom: -40px;
+            left: -10px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .cake-base {
+            width: 240px;
+            height: 30px;
+            background: linear-gradient(to bottom, #a29bfe, #6c5ce7);
+            position: absolute;
+            bottom: -70px;
+            left: -20px;
+            border-radius: 5px;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .candle {
+            width: 12px;
+            height: 60px;
+            background: linear-gradient(to right, #ff6b6b, #ee5a6f);
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 3px 3px 0 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .candle::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 8px;
+            background: #333;
+            border-radius: 2px;
+        }
+
+        .flame {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 30px;
+            background: #ffa502;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: flicker 0.3s ease-in-out infinite alternate;
+        }
+
+        .flame::before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 18px;
+            background: #ff6348;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+        }
+
+        .flame::after {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 12px;
+            background: #ffd32a;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+        }
+
+        @keyframes flicker {
+            0% {
+                transform: translateX(-50%) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(-50%) scale(1.05) translateY(-2px);
+                opacity: 0.9;
+            }
+        }
+
+        .decoration {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+        }
+
+        .decoration:nth-child(1) {
+            background: #ff6b6b;
+            top: 30px;
+            left: 20px;
+        }
+
+        .decoration:nth-child(2) {
+            background: #4ecdc4;
+            top: 50px;
+            left: 40px;
+        }
+
+        .decoration:nth-child(3) {
+            background: #ffd32a;
+            top: 30px;
+            right: 20px;
+        }
+
+        .decoration:nth-child(4) {
+            background: #a29bfe;
+            top: 50px;
+            right: 40px;
+        }
+
+        .decoration:nth-child(5) {
+            background: #fd79a8;
+            top: 70px;
+            left: 30px;
+        }
+
+        .decoration:nth-child(6) {
+            background: #00b894;
+            top: 70px;
+            right: 30px;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            opacity: 0;
+            z-index: 5;
+        }
+
+        .confetti.animate {
+            animation: confettiFall 3s ease-out forwards;
+        }
+
+        .balloon {
+            position: absolute;
+            bottom: -150px;
+            width: 60px;
+            height: 80px;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            z-index: 1;
+        }
+
+        .balloon::before {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100px;
+            background: #666;
+        }
+
+        .balloon::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: inherit;
+        }
+
+        .balloon.animate {
+            animation: floatUp 8s ease-in-out infinite;
+        }
+
+        @keyframes fadeInDown {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes zoomIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes confettiFall {
+            0% {
+                opacity: 1;
+                transform: translateY(-100vh) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(100vh) rotate(720deg);
+            }
+        }
+
+        @keyframes floatUp {
+            0% {
+                bottom: -150px;
+                opacity: 0.8;
+            }
+            50% {
+                opacity: 0.9;
+            }
+            100% {
+                bottom: 110vh;
+                opacity: 0;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .birthday {
+                font-size: 80px;
+            }
+            .happy {
+                font-size: 32px;
+            }
+            .to-you {
+                font-size: 24px;
+            }
+            .friend-image {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="click-btn" id="revealBtn">Click Me! 🎉</button>
+        
+        <div class="birthday-content" id="birthdayContent">
+            <div class="birthday-text">
+                <div class="happy" id="happy">HAPPY</div>
+                <div class="birthday" id="birthday">birthday</div>
+                <div class="to-you" id="toYou">TO YOU</div>
+            </div>
+            <div class="cake-container" id="cakeContainer">
+                <div class="cake">
+                    <div class="candle">
+                        <div class="flame"></div>
+                    </div>
+                    <div class="decoration"></div>
+                    <div class="decoration"></div>
+                    <div class="decoration"></div>
+                    <div class="decoration"></div>
+                    <div class="decoration"></div>
+                    <div class="decoration"></div>
+                    <div class="cake-layer"></div>
+                    <div class="cake-base"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const btn = document.getElementById('revealBtn');
+        const content = document.getElementById('birthdayContent');
+        const happy = document.getElementById('happy');
+        const birthday = document.getElementById('birthday');
+        const toYou = document.getElementById('toYou');
+        const cakeContainer = document.getElementById('cakeContainer');
+
+        btn.addEventListener('click', function() {
+            // Hide button
+            btn.style.animation = 'fadeInUp 0.5s ease reverse forwards';
+            
+            setTimeout(() => {
+                btn.classList.add('hidden');
+                content.classList.add('show');
+                
+                // Animate text elements
+                happy.classList.add('animate');
+                birthday.classList.add('animate');
+                toYou.classList.add('animate');
+                cakeContainer.classList.add('animate');
+                
+                // Create confetti
+                createConfetti();
+                
+                // Create balloons
+                createBalloons();
+            }, 500);
+        });
+
+        function createConfetti() {
+            const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f7b731', '#5f27cd', '#fd79a8', '#fdcb6e', '#e17055'];
+            
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    
+                    if (Math.random() > 0.5) {
+                        confetti.style.borderRadius = '50%';
+                    }
+                    
+                    document.body.appendChild(confetti);
+                    confetti.classList.add('animate');
+                    
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 4000);
+                }, i * 30);
+            }
+        }
+
+        function createBalloons() {
+            const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f7b731', '#5f27cd', '#fd79a8', '#fdcb6e', '#e17055', '#74b9ff', '#a29bfe'];
+            
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const balloon = document.createElement('div');
+                    balloon.className = 'balloon';
+                    balloon.style.left = Math.random() * 100 + '%';
+                    balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    balloon.style.animationDelay = Math.random() * 2 + 's';
+                    balloon.style.animationDuration = (Math.random() * 3 + 6) + 's';
+                    
+                    document.body.appendChild(balloon);
+                    balloon.classList.add('animate');
+                    
+                    setTimeout(() => {
+                        balloon.remove();
+                    }, 12000);
+                }, i * 400);
+            }
+        }
+    </script>
+</body>
+</html>
