@@ -5,177 +5,180 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday!</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-        body {
-            font-family: 'Georgia', serif;
-            background: white;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
+    body {
+        font-family: 'Georgia', serif;
+        background: white;
+        min-height: 100vh;
+        display: block; /* FIXED: removed flex-centering */
+        overflow-x: hidden;
+        text-align: center;
+        padding-top: 80px; /* NEW: spacing from top */
+    }
 
-        /* FIXED: container no longer uses fixed positioning */
-        .container {
-            text-align: center;
-            width: 100%;
-        }
+    .container {
+        width: 100%;
+        text-align: center;
+    }
 
-        .click-btn {
-            padding: 20px 50px;
-            font-size: 24px;
-            background: #333;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-            font-weight: bold;
-            animation: pulse 2s infinite;
-        }
+    .click-btn {
+        padding: 20px 50px;
+        font-size: 24px;
+        background: #333;
+        color: white;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+        font-weight: bold;
+        animation: pulse 2s infinite;
+        margin-top: 80px; /* NEW: centers button properly */
+    }
 
-        .click-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-            background: #000;
-        }
+    .click-btn:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        background: #000;
+    }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
 
-        .birthday-content {
-            opacity: 0;
-            pointer-events: none;
-        }
+    .birthday-content {
+        opacity: 0;
+        pointer-events: none;
+        margin-top: 40px; /* NEW */
+    }
 
-        .birthday-content.show {
-            opacity: 1;
-            pointer-events: auto;
-        }
+    .birthday-content.show {
+        opacity: 1;
+        pointer-events: auto;
+    }
 
-        .happy {
-            font-size: 48px;
-            font-weight: 300;
-            letter-spacing: 8px;
-            color: #333;
-            opacity: 0;
-            transform: translateY(-50px);
-        }
+    .happy {
+        font-size: 48px;
+        font-weight: 300;
+        letter-spacing: 8px;
+        color: #333;
+        opacity: 0;
+        transform: translateY(-50px);
+        margin-bottom: 20px; /* NEW */
+    }
 
-        .happy.animate {
-            animation: fadeInDown 1s ease forwards;
-        }
+    .happy.animate {
+        animation: fadeInDown 1s ease forwards;
+    }
 
-        .birthday {
-            font-family: 'Brush Script MT', cursive;
-            font-size: 120px;
-            font-weight: bold;
-            color: #333;
-            opacity: 0;
-            transform: scale(0);
-            font-style: italic;
-        }
+    .birthday {
+        font-family: 'Brush Script MT', cursive;
+        font-size: 120px;
+        font-weight: bold;
+        color: #333;
+        opacity: 0;
+        transform: scale(0);
+        margin-bottom: 30px; /* NEW */
+    }
 
-        .birthday.animate {
-            animation: zoomIn 1s ease 0.5s forwards;
-        }
+    .birthday.animate {
+        animation: zoomIn 1s ease 0.5s forwards;
+    }
 
-        .to-you {
-            font-size: 32px;
-            color: #333;
-            letter-spacing: 4px;
-            opacity: 0;
-            transform: translateY(50px);
-            border-top: 2px solid #333;
-            border-bottom: 2px solid #333;
-            padding: 10px 40px;
-            margin-top: 10px;
-            margin-bottom: 40px; /* FIX: Added spacing above cake */
-        }
+    .to-you {
+        font-size: 32px;
+        color: #333;
+        letter-spacing: 4px;
+        opacity: 0;
+        transform: translateY(50px);
+        border-top: 2px solid #333;
+        border-bottom: 2px solid #333;
+        padding: 12px 0;
+        width: 60%;             /* FIX: keeps line centered */
+        margin: 0 auto 60px;    /* FIX: perfect alignment */
+    }
 
-        .to-you.animate {
-            animation: fadeInUp 1s ease 1s forwards;
-        }
+    .to-you.animate {
+        animation: fadeInUp 1s ease 1s forwards;
+    }
 
-        .cake-container {
-            margin-top: 120px;  /* FIX: prevents overlap */
-            opacity: 0;
-            transform: scale(0);
-        }
+    .cake-container {
+        opacity: 0;
+        transform: scale(0);
+        margin-top: 40px; /* FIXED: properly spaced */
+    }
 
-        .cake-container.animate {
-            animation: zoomIn 1s ease 1.5s forwards;
-        }
+    .cake-container.animate {
+        animation: zoomIn 1s ease 1.5s forwards;
+    }
 
-        .cake {
-            width: 200px;
-            height: 150px;
-            background: linear-gradient(to bottom, #ff9a9e 0%, #fad0c4 50%, #fad0c4 100%);
-            border-radius: 20px 20px 0 0;
-            position: relative;
-            margin: 0 auto;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-        }
+    .cake {
+        width: 200px;
+        height: 150px;
+        background: linear-gradient(to bottom, #ff9a9e 0%, #fad0c4 50%, #fad0c4 100%);
+        border-radius: 20px 20px 0 0;
+        position: relative;
+        margin: 0 auto;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    }
 
-        .cake-layer {
-            width: 220px;
-            height: 40px;
-            background: linear-gradient(to bottom, #ffeaa7, #fdcb6e);
-            position: absolute;
-            bottom: -40px;
-            left: -10px;
-            border-radius: 10px;
-        }
+    .cake-layer {
+        width: 220px;
+        height: 40px;
+        background: linear-gradient(to bottom, #ffeaa7, #fdcb6e);
+        position: absolute;
+        bottom: -40px;
+        left: -10px;
+        border-radius: 10px;
+    }
 
-        .cake-base {
-            width: 240px;
-            height: 30px;
-            background: linear-gradient(to bottom, #a29bfe, #6c5ce7);
-            position: absolute;
-            bottom: -70px;
-            left: -20px;
-            border-radius: 5px;
-        }
+    .cake-base {
+        width: 240px;
+        height: 30px;
+        background: linear-gradient(to bottom, #a29bfe, #6c5ce7);
+        position: absolute;
+        bottom: -70px;
+        left: -20px;
+        border-radius: 5px;
+    }
 
-        .candle {
-            width: 12px;
-            height: 60px;
-            background: linear-gradient(to right, #ff6b6b, #ee5a6f);
-            position: absolute;
-            top: -60px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-radius: 3px 3px 0 0;
-        }
+    .candle {
+        width: 12px;
+        height: 60px;
+        background: linear-gradient(to right, #ff6b6b, #ee5a6f);
+        position: absolute;
+        top: -60px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 3px 3px 0 0;
+    }
 
-        .flame {
-            position: absolute;
-            top: -25px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 20px;
-            height: 30px;
-            background: #ffa502;
-            border-radius: 50%;
-            animation: flicker 0.3s infinite alternate;
-        }
+    .flame {
+        position: absolute;
+        top: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 20px;
+        height: 30px;
+        background: #ffa502;
+        border-radius: 50%;
+        animation: flicker 0.3s infinite alternate;
+    }
 
-        @keyframes fadeInDown { to { opacity: 1; transform: translateY(0); } }
-        @keyframes zoomIn { to { opacity: 1; transform: scale(1); } }
-        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
-        @keyframes flicker { 0% { transform: scale(1); } 100% { transform: scale(1.05); } }
+    @keyframes fadeInDown { to { opacity: 1; transform: translateY(0); } }
+    @keyframes zoomIn { to { opacity: 1; transform: scale(1); } }
+    @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+    @keyframes flicker { 0% { transform: scale(1); } 100% { transform: scale(1.05); } }
 
-        .hidden { display: none; }
-    </style>
+    .hidden { display: none; }
+</style>
+
 </head>
 <body>
 
