@@ -19,16 +19,11 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            position: relative;
         }
 
+        /* FIXED: container no longer uses fixed positioning */
         .container {
             text-align: center;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 10;
             width: 100%;
         }
 
@@ -53,33 +48,18 @@
         }
 
         @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
         .birthday-content {
             opacity: 0;
             pointer-events: none;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
         }
 
         .birthday-content.show {
             opacity: 1;
             pointer-events: auto;
-        }
-
-        .birthday-text {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
         }
 
         .happy {
@@ -89,7 +69,6 @@
             color: #333;
             opacity: 0;
             transform: translateY(-50px);
-            text-align: center;
         }
 
         .happy.animate {
@@ -103,8 +82,6 @@
             color: #333;
             opacity: 0;
             transform: scale(0);
-            display: inline-block;
-            text-align: center;
             font-style: italic;
         }
 
@@ -121,9 +98,8 @@
             border-top: 2px solid #333;
             border-bottom: 2px solid #333;
             padding: 10px 40px;
-            display: inline-block;
             margin-top: 10px;
-            text-align: center;
+            margin-bottom: 40px; /* FIX: Added spacing above cake */
         }
 
         .to-you.animate {
@@ -131,7 +107,7 @@
         }
 
         .cake-container {
-            margin-top: 80px;
+            margin-top: 120px;  /* FIX: prevents overlap */
             opacity: 0;
             transform: scale(0);
         }
@@ -150,18 +126,6 @@
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
         }
 
-        .cake::before {
-            content: '';
-            position: absolute;
-            top: 20px;
-            left: 10px;
-            right: 10px;
-            height: 40px;
-            background: #fff;
-            border-radius: 10px;
-            opacity: 0.3;
-        }
-
         .cake-layer {
             width: 220px;
             height: 40px;
@@ -170,7 +134,6 @@
             bottom: -40px;
             left: -10px;
             border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
         }
 
         .cake-base {
@@ -181,7 +144,6 @@
             bottom: -70px;
             left: -20px;
             border-radius: 5px;
-            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.3);
         }
 
         .candle {
@@ -193,19 +155,6 @@
             left: 50%;
             transform: translateX(-50%);
             border-radius: 3px 3px 0 0;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-
-        .candle::before {
-            content: '';
-            position: absolute;
-            top: -5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 8px;
-            background: #333;
-            border-radius: 2px;
         }
 
         .flame {
@@ -216,224 +165,36 @@
             width: 20px;
             height: 30px;
             background: #ffa502;
-            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-            animation: flicker 0.3s ease-in-out infinite alternate;
-        }
-
-        .flame::before {
-            content: '';
-            position: absolute;
-            top: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 12px;
-            height: 18px;
-            background: #ff6348;
-            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-        }
-
-        .flame::after {
-            content: '';
-            position: absolute;
-            top: 8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 8px;
-            height: 12px;
-            background: #ffd32a;
-            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-        }
-
-        @keyframes flicker {
-            0% {
-                transform: translateX(-50%) scale(1);
-                opacity: 1;
-            }
-            100% {
-                transform: translateX(-50%) scale(1.05) translateY(-2px);
-                opacity: 0.9;
-            }
-        }
-
-        .decoration {
-            position: absolute;
-            width: 15px;
-            height: 15px;
             border-radius: 50%;
+            animation: flicker 0.3s infinite alternate;
         }
 
-        .decoration:nth-child(1) {
-            background: #ff6b6b;
-            top: 30px;
-            left: 20px;
-        }
+        @keyframes fadeInDown { to { opacity: 1; transform: translateY(0); } }
+        @keyframes zoomIn { to { opacity: 1; transform: scale(1); } }
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+        @keyframes flicker { 0% { transform: scale(1); } 100% { transform: scale(1.05); } }
 
-        .decoration:nth-child(2) {
-            background: #4ecdc4;
-            top: 50px;
-            left: 40px;
-        }
-
-        .decoration:nth-child(3) {
-            background: #ffd32a;
-            top: 30px;
-            right: 20px;
-        }
-
-        .decoration:nth-child(4) {
-            background: #a29bfe;
-            top: 50px;
-            right: 40px;
-        }
-
-        .decoration:nth-child(5) {
-            background: #fd79a8;
-            top: 70px;
-            left: 30px;
-        }
-
-        .decoration:nth-child(6) {
-            background: #00b894;
-            top: 70px;
-            right: 30px;
-        }
-
-        .confetti {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            opacity: 0;
-            z-index: 5;
-        }
-
-        .confetti.animate {
-            animation: confettiFall 3s ease-out forwards;
-        }
-
-        .balloon {
-            position: absolute;
-            bottom: -150px;
-            width: 60px;
-            height: 80px;
-            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-            z-index: 1;
-        }
-
-        .balloon::before {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 2px;
-            height: 100px;
-            background: #666;
-        }
-
-        .balloon::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: inherit;
-        }
-
-        .balloon.animate {
-            animation: floatUp 8s ease-in-out infinite;
-        }
-
-        @keyframes fadeInDown {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes zoomIn {
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes confettiFall {
-            0% {
-                opacity: 1;
-                transform: translateY(-100vh) rotate(0deg);
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(100vh) rotate(720deg);
-            }
-        }
-
-        @keyframes floatUp {
-            0% {
-                bottom: -150px;
-                opacity: 0.8;
-            }
-            50% {
-                opacity: 0.9;
-            }
-            100% {
-                bottom: 110vh;
-                opacity: 0;
-            }
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        @media (max-width: 768px) {
-            .birthday {
-                font-size: 80px;
-            }
-            .happy {
-                font-size: 32px;
-            }
-            .to-you {
-                font-size: 24px;
-            }
-            .friend-image {
-                width: 150px;
-                height: 150px;
-            }
-        }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
+
+    <!-- Audio file -->
+    <audio id="birthdayAudio" src="HappyBirthday.mp3"></audio>
+
     <div class="container">
         <button class="click-btn" id="revealBtn">Click Me! 🎉</button>
         
         <div class="birthday-content" id="birthdayContent">
-            <div class="birthday-text">
-                <div class="happy" id="happy">HAPPY</div>
-                <div class="birthday" id="birthday">birthday</div>
-                <div class="to-you" id="toYou">TO YOU</div>
-            </div>
+            <div class="happy" id="happy">HAPPY</div>
+            <div class="birthday" id="birthday">birthday</div>
+            <div class="to-you" id="toYou">TO YOU</div>
+
             <div class="cake-container" id="cakeContainer">
                 <div class="cake">
                     <div class="candle">
                         <div class="flame"></div>
                     </div>
-                    <div class="decoration"></div>
-                    <div class="decoration"></div>
-                    <div class="decoration"></div>
-                    <div class="decoration"></div>
-                    <div class="decoration"></div>
-                    <div class="decoration"></div>
                     <div class="cake-layer"></div>
                     <div class="cake-base"></div>
                 </div>
@@ -442,82 +203,32 @@
     </div>
 
     <script>
-        const btn = document.getElementById('revealBtn');
-        const content = document.getElementById('birthdayContent');
-        const happy = document.getElementById('happy');
-        const birthday = document.getElementById('birthday');
-        const toYou = document.getElementById('toYou');
-        const cakeContainer = document.getElementById('cakeContainer');
+        const btn = document.getElementById("revealBtn");
+        const audio = document.getElementById("birthdayAudio");
 
-        btn.addEventListener('click', function() {
-            // Hide button
-            btn.style.animation = 'fadeInUp 0.5s ease reverse forwards';
-            
+        const content = document.getElementById("birthdayContent");
+        const happy = document.getElementById("happy");
+        const birthday = document.getElementById("birthday");
+        const toYou = document.getElementById("toYou");
+        const cakeContainer = document.getElementById("cakeContainer");
+
+        btn.addEventListener("click", () => {
+
+            audio.play(); // 🔊 Play music on click
+
+            btn.style.animation = 'fadeInUp 0.5s reverse forwards';
+
             setTimeout(() => {
-                btn.classList.add('hidden');
-                content.classList.add('show');
-                
-                // Animate text elements
-                happy.classList.add('animate');
-                birthday.classList.add('animate');
-                toYou.classList.add('animate');
-                cakeContainer.classList.add('animate');
-                
-                // Create confetti
-                createConfetti();
-                
-                // Create balloons
-                createBalloons();
+                btn.classList.add("hidden");
+                content.classList.add("show");
+
+                happy.classList.add("animate");
+                birthday.classList.add("animate");
+                toYou.classList.add("animate");
+                cakeContainer.classList.add("animate");
             }, 500);
         });
-
-        function createConfetti() {
-            const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f7b731', '#5f27cd', '#fd79a8', '#fdcb6e', '#e17055'];
-            
-            for (let i = 0; i < 100; i++) {
-                setTimeout(() => {
-                    const confetti = document.createElement('div');
-                    confetti.className = 'confetti';
-                    confetti.style.left = Math.random() * 100 + '%';
-                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
-                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
-                    
-                    if (Math.random() > 0.5) {
-                        confetti.style.borderRadius = '50%';
-                    }
-                    
-                    document.body.appendChild(confetti);
-                    confetti.classList.add('animate');
-                    
-                    setTimeout(() => {
-                        confetti.remove();
-                    }, 4000);
-                }, i * 30);
-            }
-        }
-
-        function createBalloons() {
-            const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f7b731', '#5f27cd', '#fd79a8', '#fdcb6e', '#e17055', '#74b9ff', '#a29bfe'];
-            
-            for (let i = 0; i < 15; i++) {
-                setTimeout(() => {
-                    const balloon = document.createElement('div');
-                    balloon.className = 'balloon';
-                    balloon.style.left = Math.random() * 100 + '%';
-                    balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                    balloon.style.animationDelay = Math.random() * 2 + 's';
-                    balloon.style.animationDuration = (Math.random() * 3 + 6) + 's';
-                    
-                    document.body.appendChild(balloon);
-                    balloon.classList.add('animate');
-                    
-                    setTimeout(() => {
-                        balloon.remove();
-                    }, 12000);
-                }, i * 400);
-            }
-        }
     </script>
+
 </body>
 </html>
